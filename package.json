@@ -3,11 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.4",
+    "@mui/material": "^5.2.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.24.0",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "epayco-sdk-node": "^1.1.0",
+    "md5": "^2.3.0",
+    "mercadopago": "^1.5.9",
+    "payu": "^0.0.1",
+    "payu-latam-node": "^0.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-epayco": "^0.1.5",
+    "react-imask": "^6.2.2",
+    "react-number-format": "^4.8.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
@@ -15,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "nodemon newProduct.js"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
