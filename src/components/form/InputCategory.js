@@ -14,7 +14,7 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      width: 'auto',
     },
   },
 };
@@ -51,18 +51,19 @@ export default function InputCategory() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 0, width: '100%' }}>
         <InputLabel id="demo-multiple-chip-label">Categorias</InputLabel>
         <Select
+          fullWidth
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
-          name="category"
+          name="categoria"
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Categorias" />}
+          input={<OutlinedInput id="select-multiple-chip" label="Categorias"/>}
           renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, left: '8px' }}>
               {selected.map((value) => (
                 <Chip key={value} label={value} />
               ))}
