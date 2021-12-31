@@ -23,10 +23,12 @@ app.post('/checkout', (req, res) => {
       
       mercadopago.preferences.create(preference)
         .then(function(response) {
-            response.body.back_urls.success = 'aqui va la url de la pagina de inicio'
-            response.body.back_urls.failure = 'aqui va la url de la pagina de fallo'
+            response.body.back_urls.success = 'http://localhost:3000/success'
+            response.body.back_urls.failure = 'http://localhost:3000/success'
             response.body.back_urls.pending = 'aqui va la url de la pagina de pendiente'
-            console.log(response.body.back_urls)
+            response.body.redirect_urls.success = 'http://localhost:3000/success'
+            response.body.auto_return= "approved"
+            console.log(response.body)
             res.redirect(response.body.init_point)
         }).catch(function(error) {
             console.log(error)

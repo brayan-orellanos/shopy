@@ -4,6 +4,7 @@ import App from './App';
 import Products from './components/Products';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './colors.css';
+import Redirection from './components/Redirection';
 
 const rootElement = document.getElementById("root");
 render(
@@ -11,6 +12,7 @@ render(
     <Routes>
       <Route path="/" element={<App />}></Route>
       <Route path="Productos" element={<Products/>}></Route>
+      <Route path="success" element={<Redirection/>}></Route>
     </Routes>
   </BrowserRouter>
 , rootElement);

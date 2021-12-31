@@ -25,6 +25,24 @@ const MercadoPago = () => {
     },
   ];
 
+
+  const handleLs = () => {
+    localStorage.setItem('items', 'varios');
+  }
+
+  // arreglo.map(el => {
+  //   const {title, quantityProduct, price} = el
+
+  //   let nuevoProducto = {
+  //     title,
+  //     quantity: quantityProduct,
+  //     currency_id: "COP",
+  //     unit_price: Number(price)/Number(quantityProduct)
+  //   }
+
+  //   products.push(nuevoProducto);
+  // })
+
   // const productsObject = {
   //   products: products,
   // };
@@ -52,7 +70,7 @@ const MercadoPago = () => {
     <div>
       <form action="http://localhost:8080/checkout" method="POST">
         <input type="hidden" value={JSON.stringify(products)} name='items'/>
-        <input type="submit" value="Enviar" />
+        <input type="submit" value="Enviar" onClick={handleLs}/>
       </form>
     </div>
   );
