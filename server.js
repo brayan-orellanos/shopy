@@ -1,44 +1,36 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const mercadopago = require("mercadopago");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-app.use(express.static("public"));
-const formidable = require("express-formidable");
+const mercadopago = require('mercadopago');
+const bodyParser = require('body-parser');
+const cors = require('cors')
+app.use(express.static('public'));
 
-app.use(formidable());
+app.use(bodyParser.urlencoded({extended: true}))
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(cors());
+app.use(cors())
 
 mercadopago.configure({
-  access_token:
-    "APP_USR-455170933943540-121515-264e060c6c698bb50d38c524499ae8fa-1039995700",
-});
-
-app.post("/checkout", (req, res) => {
-  res.statusCode = 200;
-  res.send(JSON.stringify(req.fields));
-  res.end(req.fields);
-  console.log(req.fields);
-
-  let preference = {
-    items: JSON.parse(req.fields),
-  };
-
-  mercadopago.preferences
-    .create(preference)
-    .then(function (response) {
-      console.log(response.body);
-      res.redirect(response.body.init_point);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    access_token: 'APP_USR-455170933943540-121515-264e060c6c698bb50d38c524499ae8fa-1039995700'
 });
 
 
-app.listen(4040, () => {
-  console.log("server on port 4040");
-});
+app.post('/checkout', (req, res) => {
+    console.log(req.body)
+
+    let preference = {
+        items: JSON.parse(req.body.items)
+      };
+      
+      mercadopago.preferences.create(preference)
+        .then(function(response) {
+            response.body.back_urls.success = 'aqui va la url de la pagina de inicio'
+            response.body.back_urls.failure = 'aqui va la url de la pagina de fallo'
+            response.body.back_urls.pending = 'aqui va la url de la pagina de pendiente'
+            console.log(response.body.back_urls)
+            res.redirect(response.body.init_point)
+        }).catch(function(error) {
+            console.log(error)
+        })
+})
+
+app.listen(8080, () =>{ console.log('server on port 8080')})

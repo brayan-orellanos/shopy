@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import App from './App';
 import Products from './components/Products';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import './colors.css';
 
 const rootElement = document.getElementById("root");
 render(

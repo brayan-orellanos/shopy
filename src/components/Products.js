@@ -36,15 +36,24 @@ const Products = () => {
  
   
   return (
-      <>
-      {productos.map((product) => {
+      <div spacing={2} sx={{ margin: "0 auto", display: 'flex', gap: '10px' }}>
+      {productos.map((product, i) => {
         return (
-          <Card sx={{ maxWidth: 345 }} key={product.id}>
+          <Card sx={{width: '300px', display: 'inline-block', margin: '20px' }} key={i}>
             <CardMedia
               component="img"
               height="140"
-              image="/static/images/cards/contemplative-reptile.jpg"
-              alt="green iguana"
+              image={`http://127.0.0.1:5500/src/images/${JSON.parse(product.images)[0].path}`}
+              alt={`${JSON.parse(product.images)[0]}`}
+              onMouseOver={e => {
+                if(JSON.parse(product.images).length > 1) {
+                  e.target.src = `http://127.0.0.1:5500/src/images/${JSON.parse(product.images)[1].path}`
+                }
+              }}
+
+              onMouseOut={e => {
+                e.target.src = `http://127.0.0.1:5500/src/images/${JSON.parse(product.images)[0].path}`
+              }}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -61,7 +70,7 @@ const Products = () => {
           </Card>
         );
       })}
-    </>
+    </div>
   );
 };
 

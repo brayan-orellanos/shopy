@@ -38,56 +38,40 @@ const FormProduct = () => {
 
   
   const handledSubmit = async (e) => {
-    // setFileObjects([])
     e.preventDefault();
 
+    const data = new FormData(e.target);
+    data.append('file', e.target.imagen.files[0])
     try {
-      const data = new FormData(e.target);
-      const image = e.target.imagen.files[0]
-      data.append("picture", image)
-      console.log(e.target);
-
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     // "Content-Type": "application/x-www-form-urlencoded",
+      //     "content-type": "multipart/form-data",
+      //   },
+      // };
 
       const res = await axios.post(
-        "http://localhost:8080/createProduct",
-        data,
-        config
+        "http://localhost:8080/create",
+        data
       );
 
       console.log(res);
-
-      if (res.status === 200) {
-        console.log("los datos se han enviado correctamente");
-      } else {
-        console.log("a ocurrido un error");
-      }
-
-      return res;
     } catch (err) {
       console.log(err);
     }
-
-    console.log(e.target);
-
   };
 
   return (
     <Box
-      onSubmit={handledSubmit}
-      component="form"
-      sx={{
-        width: 1100,
-        maxWidth: "100%",
-        textAlign: "center",
-        margin: "0 auto",
-      }}
-      id="formProduct"
+    component="form"
+    sx={{
+      width: 1100,
+      maxWidth: "100%",
+      textAlign: "center",
+      margin: "0 auto",
+    }}
+    id="formProduct"
+    onSubmit={handledSubmit}
     >
       <h1>Añadir nuevo producto</h1>
 

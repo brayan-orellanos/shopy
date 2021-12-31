@@ -25,33 +25,33 @@ const MercadoPago = () => {
     },
   ];
 
-  const productsObject = {
-    products: products,
-  };
+  // const productsObject = {
+  //   products: products,
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      let res = await fetch("http://localhost:4040/checkout", {
-        method: "POST",
-        body: JSON.stringify(productsObject),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     let res = await fetch("http://localhost:4040/checkout", {
+  //       method: "POST",
+  //       body: JSON.stringify(productsObject),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
 
-      console.log(res);
+  //     console.log(res);
 
-      return res
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     return res
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div>
-      <form onSubmit={handleSubmit} method="POST">
-        <input type="hidden" name="items" />
+      <form action="http://localhost:8080/checkout" method="POST">
+        <input type="hidden" value={JSON.stringify(products)} name='items'/>
         <input type="submit" value="Enviar" />
       </form>
     </div>
