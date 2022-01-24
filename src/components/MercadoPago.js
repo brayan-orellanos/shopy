@@ -1,27 +1,35 @@
 import React from "react";
 
 const MercadoPago = () => {
+  let loc = window.location.origin
+   
   const products = [
     {
-      title: "mesa1",
-      description: "mesa",
+      id: "1",
+      title: "cama",
+      picture_url: `${loc}/src/images/cama-vitelli-front.jpg`,
+      description: "cama ortopedica",
       quantity: 1,
       currency_id: "COP",
-      unit_price: 200,
+      unit_price: 2000,
     },
     {
-      title: "mesa2",
-      description: "mesa",
-      quantity: 3,
+      id:"2",
+      title: "silla",
+      picture_url: `${loc}/src/images/silla.jpg`,
+      description: "silla de madera con tres patas",
+      quantity: 2,
       currency_id: "COP",
-      unit_price: 300,
+      unit_price: 3000,
     },
     {
-      title: "mesa3",
-      description: "mesa",
-      quantity: 4,
+      id: "3",
+      title: "mesa",
+      picture_url: `${loc}/src/images/mesa.jpg`,
+      description: "mesa de madera",
+      quantity: 2,
       currency_id: "COP",
-      unit_price: 500,
+      unit_price: 5000,
     },
   ];
 
