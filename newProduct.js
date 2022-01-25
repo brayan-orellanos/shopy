@@ -7,7 +7,7 @@ const app = express();
 
 app.use(
   fileupload({
-    limits: { fileSize: 50 * 1024 * 1024 },
+    limits: { fileSize: 20 * 1024 * 1024 },
     createParentPath: true,
     responseOnLimit: "El archivo es demasiado pesado"
   })
@@ -25,34 +25,60 @@ app.get("/", function (req, res) {
 
 app.post("/create", async (req, res) => {
   const newpath = __dirname + "/src/image/";
-  const imagen = req.files.imagen;
-  const imagesDropzone = req.files.imagesDropzone;
+
+  console.log(req.body);
 
   if (req.files) {
-    for (let i = 0; i < imagesDropzone.length; i++) {
-      const filename = imagesDropzone[i].name;
-      imagesDropzone[i].mv(`${newpath}${filename}`, (err) => {
-        if (err) {
-          console.log(err);
-          res.status(500);
+    if (req.files.imagesDropzone) {
+      const imagesDropzone = req.files.imagesDropzone;
+
+      if (imagesDropzone.length >= 2) {
+        for (let i = 0; i < imagesDropzone.length; i++) {
+          let filename = imagesDropzone[i].name;
+          imagesDropzone[i].mv(`${newpath}${filename}`, (err) => {
+            if (err) {
+              console.log(err);
+              res.status(500);
+            }
+            res.status(200);
+          });
         }
-        res.status(200);
-      });
+      } else {
+        let filename = imagesDropzone.name;
+        imagesDropzone.mv(`${newpath}${filename}`, (err) => {
+          if (err) {
+            console.log(err);
+            res.status(500);
+          }
+          res.status(200);
+        });
+      }
     }
 
-    for (let i = 0; i < imagen.length; i++) {
-      const filename = imagen[i].name;
-      imagen[i].mv(`${newpath}${filename}`, (err) => {
-        if (err) {
-          console.log(err);
-          res.status(500);
+    if (req.files.imagen) {
+      const imagen = req.files.imagen;
+      if (imagen.length >= 2) {
+        for (let i = 0; i < imagen.length; i++) {
+          const filename = imagen[i].name;
+          imagen[i].mv(`${newpath}${filename}`, (err) => {
+            if (err) {
+              console.log(err);
+              res.status(500);
+            }
+            res.status(200);
+          });
         }
-        res.status(200);
-      });
+      } else {
+        let filename = imagen.name;
+        imagen.mv(`${newpath}${filename}`, (err) => {
+          if (err) {
+            console.log(err);
+            res.status(500);
+          }
+          res.status(200);
+        });
+      }
     }
-  } else {
-    res.status(500);
-    res.send("No hay ningun archivo");
   }
 
   // console.log(req);

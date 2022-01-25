@@ -5,53 +5,40 @@ import InputSubmit from "./form/InputSubmit";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import AgregarNuevoInput from "./form/AgregarNuevoInput";
-import { DropzoneArea } from "material-ui-dropzone";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useForm } from "react-hook-form";
+import DropZone from "./form/DropZone";
 // import LoadingButton from '@mui/lab/LoadingButton';
 
 const FormProduct = () => {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [fileObjects, setFileObjects] = useState([]);
   const {
     register,
     formState: { errors },
     handleSubmit,
-    clearErrors
-  } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      nombre: ""
-    }
-  });
-
-  const useStyles = makeStyles((theme) => ({
-    DropzoneArea: () => ({
-      fontWeight: 10,
-      margin: 0,
-      padding: 0
-    })
-  }));
-
-  const classes = useStyles();
+    clearErrors,
+    setError
+  } = useForm();
 
   const changeName = (e) => setNombre(e.target.value);
 
   const changeDescripcion = (e) => setDescripcion(e.target.value);
 
-  const handledSubmit = async (e) => {
-    const data = new FormData(e.target);
+  const formSubmit = async (dato) => {
+    // e.preventDefault();
+    console.log(dato);
+    const data = new FormData(dato);
 
     try {
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/x-www-form-urlencoded",
-      //     "content-type": "multipart/form-data"
-      //   }
-      // };
+      const config = {
+        headers: {
+          // "Content-Type": "application/x-www-form-urlencoded",
+          "content-type": "multipart/form-data"
+        }
+      };
 
       const res = await fetch("http://localhost:4242/create", {
         method: "post",
@@ -69,13 +56,12 @@ const FormProduct = () => {
       component="form"
       sx={{
         maxWidth: 1100,
-        textAlign: "center",
         paddingRight: "16px"
       }}
       id="formProduct"
-      onSubmit={handleSubmit(handledSubmit)}
+      onSubmit={handleSubmit(formSubmit)}
     >
-      <h1>Añadir nuevo producto</h1>
+      <h1 style={{ textAlign: "center" }}>Añadir nuevo producto</h1>
 
       <Grid
         container
@@ -90,12 +76,20 @@ const FormProduct = () => {
             id="outlined-basic"
             label="Nombre"
             variant="outlined"
-            name="nombre"
+            // inputProps={{ onChange: (el) => handleChange(el) }}
             {...(errors.nombre && { error: true })}
             {...register("nombre", {
-              required: "El nombre es requerido"
+              required: "Este campo es requerido",
+              pattern: {
+                value: /^[A-Za-z]+$/i,
+                message: "Este campo solo acepta texto"
+              }
             })}
+            name="nombre"
             value={nombre}
+            InputProps={{
+              type: "text"
+            }}
             onChange={changeName}
           />
           {errors.nombre && (
@@ -109,13 +103,29 @@ const FormProduct = () => {
           <TextField
             fullWidth
             label="Precio"
-            name="precio"
             InputProps={{
               endAdornment: <InputAdornment position="end">COP</InputAdornment>,
               type: "number"
             }}
             variant="outlined"
+            {...(errors.precio && { error: true })}
+            {...register("precio", {
+              required: "Este campo es requerido",
+              minLength: {
+                value: 6,
+                message: "El minimo de caracteres es 6"
+              },
+              maxLength: {
+                value: 12,
+                message: "El maximo de caracteres es 12"
+              }
+            })}
           />
+          {errors.precio && (
+            <p style={{ margin: "5px 0 0", color: "red", textAlign: "start" }}>
+              {errors.precio.message}
+            </p>
+          )}
         </Grid>
 
         <Grid item xs={12}>
@@ -127,37 +137,32 @@ const FormProduct = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <DropzoneArea
-            acceptedFiles={["image/*"]}
-            dropzoneText={"Arrastra o selecciona las imagenes"}
-            onChange={(files) => {
-              console.log(files);
-              setFileObjects(fileObjects.concat(files));
-            }}
-            aria-describedby="xd"
-            filesLimit={10}
-            dropzoneClass={classes.DropzoneArea}
-            inputProps={{ name: "imagesDropzone" }}
-          />
+          <DropZone></DropZone>
         </Grid>
-
-        <input
-          type="hidden"
-          name="images"
-          value={JSON.stringify(fileObjects)}
-        />
 
         <Grid item xs={12}>
           <TextField
             fullWidth
             id="outlined-multiline-static"
             label="Descripcion"
-            name="descripcion"
             multiline
             rows={4}
-            value={descripcion}
+            defaultValue={descripcion}
             onChange={changeDescripcion}
+            {...(errors.descripcion && { error: true })}
+            {...register("descripcion", {
+              required: "Este campo es requerido",
+              maxLength: {
+                value: 255,
+                message: "el maximo de caracteres es 255"
+              }
+            })}
           />
+          {errors.descripcion && (
+            <p style={{ margin: "5px 0 0", color: "red", textAlign: "start" }}>
+              {errors.descripcion.message}
+            </p>
+          )}
         </Grid>
 
         <Grid item xs={12}>

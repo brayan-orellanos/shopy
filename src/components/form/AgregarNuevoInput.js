@@ -193,16 +193,14 @@ const AgregarNuevoInput = () => {
                     justifyContent: "center"
                   }}
                 >
-                  {inputList.length !== 1 && (
-                    <Tooltip title="Eliminar color">
-                      <IconButton
-                        aria-label="delete"
-                        onClick={() => handleRemoveClick(i)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  )}
+                  <Tooltip title="Eliminar color">
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleRemoveClick(i)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
                 </Grid>
               </Grid>
 

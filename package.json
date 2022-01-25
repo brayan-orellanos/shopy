@@ -35,6 +35,7 @@
     "payu-latam-node": "^0.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-dropzone": "^11.5.1",
     "react-epayco": "^0.1.5",
     "react-hook-form": "^7.25.0",
     "react-imask": "^6.2.2",
